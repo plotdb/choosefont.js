@@ -1,6 +1,6 @@
 <- $ document .ready
 
-fontbase = "https://plotdb.github.io/xl-fontset/alpha/"
+fontbase = "https://plotdb.github.io/xl-fontset/alpha"
 fontinfo = "assets/fontinfo"
 textarea = document.querySelector \#demo-textarea
 
