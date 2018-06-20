@@ -1,0 +1,61 @@
+doctype html
+html
+  head
+    meta(charset="utf-8")
+    link(rel="stylesheet",type="text/css",href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
+    link(rel="stylesheet",type="text/css",href="assets/clusterize.css")
+    link(rel="stylesheet",type="text/css",href="index.css")
+    link(rel="stylesheet",type="text/css",href="choosefont.css")
+    script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js")
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js")
+    script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js")
+    script(src="xfl.js")
+    script(src="choosefont.js")
+    script(src="assets/clusterize.min.js")
+  body: #root
+    include modal.jade
+    br
+    h1 choosefont.js
+    hr
+    p choosefont.js is a javascript library that helps you implement the font picker in your webapp. It contains two parts of code:
+    ul
+      li Font Thumbnail Sprite + Metadata Generator 
+      li Font Picker JavaScript Library
+    p It uses #[a(href="https://github.com/plotdb/xl-fontload") XL-FontLoad] to load fonts, which take care of the mechanism of partial loading of large font file made for CJK glyphs.
+    br
+    br
+    h2 Example
+    hr
+    .row
+      .col-sm-3
+        .btn.btn-outline-dark.btn-lg.mb-2.btn-block(data-toggle="modal",data-target="#demo-modal") Choose in Dialog ...
+        .dropdown.mb-2
+          .btn.btn-outline-dark.dropdown-toggle.btn-lg.btn-block(data-toggle="dropdown") Choose via Dropdown
+          #demo-dropdown.dropdown-menu(style="width:100%")
+        label: small Choose from list
+        .card.text-center.border-dark
+          ul#demo-list-group.list-group.list-group-flush(style="height:285px;overflow:scroll")
+      .col-sm-9
+        textarea#demo-textarea.form-control(rows="16").
+          一你光深……在而天心令科地看傷……行人北國目；生問真多策？供反臺係什高一最子體時本客的，策間當樹友，我聽帶習場有利具懷那須好步，多意各現在國很什子樂，然受傳不民住之首在；功小的的己學發到園產觀長人：來直計……愛治爭送對了聲，死色受素的！分但遊字夫。
+
+          耕ネ提定ほ伝公方もラゅド内高ヘ京食こ舞平クめ祝強ツヤホ歩万指トワス命1燥レタヌム千岳犠眠作りぞ。京クーる表姿し治長ぐご接社クナ市細す渡暴キ満依ーだま覧員め開由びゅ検頂条1音スサロ州53詳対ぞラおぴ密囲まつ選微酸災盗ゆク。
+
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          
+          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        br
+    br
+    br
+    h3 Usage
+    hr
+    p (TBD...)
+    br
+    br
+    h3 License
+    hr
+    p All source codes releasd by #[a(href="https://twitter.com/zbryikt") @zbryikt] under MIT License. check #[a(href="https://github.com/plotdb/choosefont.js") Github Repo] for more information.
+    br
+    br
+    br
+  script(src="index.js")
