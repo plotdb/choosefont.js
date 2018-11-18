@@ -3,8 +3,10 @@ var choosefont;
 choosefont = function(arg$){
   var node, metaUrl, type, wrapper, itemClass, cols, base;
   node = arg$.node, metaUrl = arg$.metaUrl, type = arg$.type, wrapper = arg$.wrapper, itemClass = arg$.itemClass, cols = arg$.cols, base = arg$.base;
-  node = typeof node === 'string' ? document.querySelector(node) : node;
-  node.classList.add('choosefont');
+  if (node != null) {
+    node = typeof node === 'string' ? document.querySelector(node) : node;
+    node.classList.add('choosefont');
+  }
   this.node = node;
   this.metaUrl = metaUrl;
   this.type = type;
@@ -54,29 +56,48 @@ choosefont.prototype = {
     }
     return this.cluster.update(html);
   },
+  find: function(names){
+    var this$ = this;
+    names == null && (names = []);
+    return names.map(function(it){
+      return it.split('-').filter(function(it){
+        return it;
+      });
+    }).map(function(it){
+      return [this$.fonts.hash[it[0]], it[1]];
+    }).filter(function(it){
+      return it[0];
+    });
+  },
+  load: function(font){
+    var family, path, this$ = this;
+    family = !font.family.length
+      ? ""
+      : "-" + (font.family.indexOf('Regular')
+        ? 'Regular'
+        : font.family[0]);
+    path = this.base + "/" + font.name + family + (font.isSet ? '/' : '.ttf');
+    if (typeof xfl != 'undefined' && xfl !== null) {
+      return xfl.load(path, function(it){
+        return this$.fire('choose', it);
+      });
+    } else {
+      return this.fire('choose.map', font);
+    }
+  },
   prepare: function(){
     var i$, to$, idx, font, this$ = this;
-    this.node.addEventListener('click', function(e){
-      var idx, font, family, path;
-      idx = e.target.getAttribute('data-idx');
-      font = this$.fonts.list[idx];
-      if (!font) {
-        return;
-      }
-      family = !font.family.length
-        ? ""
-        : "-" + (font.family.indexOf('Regular')
-          ? 'Regular'
-          : font.family[0]);
-      path = this$.base + "/" + font.name + family + (font.isSet ? '/' : '.ttf');
-      if (typeof xfl != 'undefined' && xfl !== null) {
-        return xfl.load(path, function(it){
-          return this$.fire('choose', it);
-        });
-      } else {
-        return this$.fire('choose.map', font);
-      }
-    });
+    if (this.node) {
+      this.node.addEventListener('click', function(e){
+        var idx, font;
+        idx = e.target.getAttribute('data-idx');
+        font = this$.fonts.list[idx];
+        if (!font) {
+          return;
+        }
+        return this$.load(font);
+      });
+    }
     this.fonts = {
       list: this.meta.fonts,
       hash: {}
@@ -94,6 +115,9 @@ choosefont.prototype = {
   },
   render: function(list){
     var ref$, html, line, i$, to$, idx;
+    if (!this.node) {
+      return;
+    }
     if (!list) {
       list = this.fonts.list;
     }
@@ -134,7 +158,7 @@ choosefont.prototype = {
     if (!cb) {
       cb = function(){};
     }
-    if (!(this.node && this.metaUrl)) {
+    if (!this.metaUrl) {
       return cb(null);
     }
     xhr = new XMLHttpRequest();
@@ -143,7 +167,10 @@ choosefont.prototype = {
         return;
       }
       this$.meta = JSON.parse(xhr.responseText);
-      return this$.prepare();
+      this$.prepare();
+      if (cb) {
+        return cb();
+      }
     });
     xhr.open('GET', this.metaUrl);
     return xhr.send();

@@ -1,6 +1,7 @@
 choosefont = ({node, meta-url, type, wrapper, itemClass, cols, base}) ->
-  node = if typeof(node) == \string => document.querySelector(node) else node
-  node.classList.add \choosefont
+  if node? =>
+    node = if typeof(node) == \string => document.querySelector(node) else node
+    node.classList.add \choosefont
   @ <<< {node, meta-url, type, wrapper, itemClass, cols, base}
   if !@cols => @cols = 4
   return @
@@ -35,16 +36,25 @@ choosefont.prototype = do
         contentElem: @node.querySelector('.clusterize-content')
         rows_in_block: 50
     @cluster.update html
+  find: (names = []) ->
+    names
+      .map -> it.split(\-).filter(->it)
+      .map ~> [@fonts.hash[it.0], it.1]
+      .filter -> it.0
+
+  load: (font) ->
+    family = if !font.family.length => ""
+    else "-" + (if font.family.indexOf(\Regular) => \Regular else font.family.0)
+    path = "#{@base}/#{font.name}#family#{if font.isSet => '/' else '.ttf'}"
+    if xfl? => xfl.load path, ~> @fire \choose, it
+    else @fire \choose.map, font
+
   prepare: ->
-    @node.addEventListener \click, (e) ~>
+    if @node => @node.addEventListener \click, (e) ~>
       idx = e.target.getAttribute \data-idx
       font = @fonts.list[idx]
       if !font => return
-      family = if !font.family.length => ""
-      else "-" + (if font.family.indexOf(\Regular) => \Regular else font.family.0)
-      path = "#{@base}/#{font.name}#family#{if font.isSet => '/' else '.ttf'}"
-      if xfl? => xfl.load path, ~> @fire \choose, it
-      else @fire \choose.map, font
+      @load font
 
     @fonts = list: @meta.fonts, hash: {}
     for idx from 0 til @meta.fonts.length =>
@@ -56,6 +66,7 @@ choosefont.prototype = do
     @render!
 
   render: (list) ->
+    if !@node => return
     if !list => list = @fonts.list
     if @type == \grid or !@type =>
       [html, line] = [[], []]
@@ -75,12 +86,13 @@ choosefont.prototype = do
 
   init: (cb) ->
     if !cb => cb = (->)
-    if !(@node and @meta-url) => return cb null
+    if !(@meta-url) => return cb null
     xhr = new XMLHttpRequest!
     xhr.addEventListener \readystatechange, ~>
       if xhr.readyState != 4 => return
       @meta = JSON.parse(xhr.responseText)
       @prepare!
+      if cb => cb!
     #TODO cache this
     xhr.open \GET, @meta-url
     xhr.send!
