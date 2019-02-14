@@ -4,15 +4,15 @@ fontbase = "https://plotdb.github.io/xl-fontset/alpha"
 fontinfo = "assets/fontinfo"
 textarea = document.querySelector \#demo-textarea
 
-modal-chooser = new choosefont {node: '#demo-modal .choosefont', meta-url: "#fontinfo/meta.json", base: fontbase}
+modal-chooser = new ChooseFont {node: '#demo-modal .choosefont', meta-url: "#fontinfo/meta.json", base: fontbase}
 modal-chooser.init!
 modal-chooser.on \choose, -> $('#demo-modal').modal('hide')
 
-dropdown-chooser = new choosefont do
+dropdown-chooser = new ChooseFont do
   node: '#demo-dropdown', meta-url: "#fontinfo/meta.json", itemClass: \dropdown-item, type: \list, base: fontbase
 dropdown-chooser.init!
 dropdown-chooser.on \choose, (font) ->
-list-chooser = new choosefont do
+list-chooser = new ChooseFont do
   node: '#demo-list-group', meta-url: "#fontinfo/meta.json", itemClass: \list-group-item, type: \list, base: fontbase
 list-chooser.init!
 [modal-chooser, list-chooser, dropdown-chooser].map ->

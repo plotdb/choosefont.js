@@ -4,7 +4,7 @@ $(document).ready(function(){
   fontbase = "https://plotdb.github.io/xl-fontset/alpha";
   fontinfo = "assets/fontinfo";
   textarea = document.querySelector('#demo-textarea');
-  modalChooser = new choosefont({
+  modalChooser = new ChooseFont({
     node: '#demo-modal .choosefont',
     metaUrl: fontinfo + "/meta.json",
     base: fontbase
@@ -13,7 +13,7 @@ $(document).ready(function(){
   modalChooser.on('choose', function(){
     return $('#demo-modal').modal('hide');
   });
-  dropdownChooser = new choosefont({
+  dropdownChooser = new ChooseFont({
     node: '#demo-dropdown',
     metaUrl: fontinfo + "/meta.json",
     itemClass: 'dropdown-item',
@@ -22,7 +22,7 @@ $(document).ready(function(){
   });
   dropdownChooser.init();
   dropdownChooser.on('choose', function(font){});
-  listChooser = new choosefont({
+  listChooser = new ChooseFont({
     node: '#demo-list-group',
     metaUrl: fontinfo + "/meta.json",
     itemClass: 'list-group-item',

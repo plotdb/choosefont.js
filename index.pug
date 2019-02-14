@@ -19,12 +19,12 @@ html
     link(rel="stylesheet",type="text/css",href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css")
     link(rel="stylesheet",type="text/css",href="assets/clusterize.css")
     link(rel="stylesheet",type="text/css",href="index.css")
-    link(rel="stylesheet",type="text/css",href="choosefont.css")
+    link(rel="stylesheet",type="text/css",href="assets/choosefont.css")
     script(src="https://code.jquery.com/jquery-3.3.1.slim.min.js")
     script(src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js")
     script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js")
-    script(src="xfl.js")
-    script(src="choosefont.js")
+    script(src="assets/xfl.js")
+    script(src="assets/choosefont.js")
     script(src="assets/clusterize.min.js")
   body: #root
     include modal.pug
@@ -71,7 +71,7 @@ html
     p then, prepare font informations files. This includes a font preview sprites image #[code: a(href="https://plotdb.github.io/choosefont.js/assets/fontinfo/sprite.min.png") sprites.min.png] and font metadata #[code: a(href="http://plotdb.github.io/choosefont.js/assets/fontinfo/meta.json") meta.json] - which could be built with choosefont.js too - and put them in your website.
     p Next we initialize the fontchooser:
     pre.card.bg-light.text-secondary: .card-body.
-      var chooser = new choosefont({
+      var chooser = new ChooseFont({
         node: &lt;css-selector-for-your-popup-modal&gt;,
         metaUrl: &lt;path-to-your-meta.json&gt;,
         base: &lt;root-directory-for-your-fonts&gt;
