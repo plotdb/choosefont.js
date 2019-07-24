@@ -125,9 +125,21 @@ html
 
     br
     h4 Custom Class Name
-    p you can also add custom class name in the #[code item] div via #[code itemClass] option.
+    p You can also add custom class name in the #[code item] div via #[code itemClass] option.
+    br
+    h4 Custom List
+    p You can customize font list by providing two additional config functions:
+    ul
+      li #[code disableFilter(f, idx)] - if return true for certain f/idx, the corresponding font will be disabled ( shown gray )
+      li #[code defaultFilter(f, idx)] - if return false for certain f/idx, the corresponding font won't be shown in the list.
+    p the f object contains following member attributes:
+    ul
+      li #[code name] - font name, string.
+      li #[code family] - font family, array of string.
+      li #[code category] - font category, array of string. 
     br
     br
+
     h3 License
     hr
     p All source codes releasd by #[a(href="https://twitter.com/zbryikt") @zbryikt] under MIT License. check #[a(href="https://github.com/plotdb/choosefont.js") Github Repo] for more information.
