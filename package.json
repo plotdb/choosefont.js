@@ -24,7 +24,7 @@
     "fs-extra": "^6.0.1",
     "pngquant": "^3.0.0",
     "progress": "^2.0.0",
-    "sharp": "^0.20.3",
+    "sharp": "^0.30.5",
     "stylus": "^0.54.5",
     "svg-path-bounding-box": "^1.0.4",
     "svg2png": "^4.1.1",
